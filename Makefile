@@ -15,6 +15,9 @@ run:
 bootstrap: venv \
 			requirements \
 
+clean:
+	rm -r $(VENV)
+
 venv:
 	python3 -m venv $(VENV)
 
