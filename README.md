@@ -12,4 +12,9 @@ Photoplethysmogram signals.
 In order to use this project it's necessary to install it's dependencies and add the pre-commit hooks, to simplify this process a makefile was used. To bootstrap this project simply run:
 
 ```bash
-$ make
+$ make bootstrap
+```
+
+# Running
+
+In order to run the main script simply run the `make` command.

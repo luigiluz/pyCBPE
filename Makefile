@@ -9,6 +9,9 @@ PIP := $(BIN)/pip
 REQUIREMENTS := -r requirements.txt
 PRE_COMMIT := $(BIN)/pre-commit
 
+run:
+	$(PYTHON) cbpe-python/main.py
+
 bootstrap: venv \
 			requirements \
 
