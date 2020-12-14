@@ -10,3 +10,4 @@ scipy==1.5.4
 numpy==1.19.4
 pyampd==0.0.1
 scikit-learn==0.23.2
+matplotlib==3.3.3

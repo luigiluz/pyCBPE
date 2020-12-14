@@ -12,6 +12,9 @@ PRE_COMMIT := $(BIN)/pre-commit
 run:
 	$(PYTHON) cbpe-python/main.py
 
+tester:
+	$(PYTHON) cbpe-python/tester.py
+
 bootstrap: venv \
 			requirements \
 
