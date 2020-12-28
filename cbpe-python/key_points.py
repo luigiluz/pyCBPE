@@ -34,13 +34,31 @@ def extract(normalized_pulse):
     }
 
     key_points[SYS_PEAK] = _find_systolic_peak_location(normalized_pulse)
+    if key_points[SYS_PEAK] == 0:
+        key_points = {}
+        return key_points
 
     regular_pulse, pulse_first_derivative, pulse_second_derivative = _fit_section_polynoms(normalized_pulse, key_points[SYS_PEAK])
 
     key_points[MAX_SLP] = _find_max_slope(pulse_first_derivative, key_points)
+    if key_points[MAX_SLP] == 0:
+        key_points = {}
+        return key_points
+
     key_points[DIAS_PEAK] = _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_points)
+    if key_points[DIAS_PEAK] == 0:
+        key_points = {}
+        return key_points
+
     key_points[DIC_NOTCH] = _find_dicrotic_notch(pulse_second_derivative, key_points)
+    if key_points[DIC_NOTCH] == 0:
+        key_points = {}
+        return key_points
+
     key_points[INFL_POINT] = _find_inflection_poiint(pulse_second_derivative, key_points)
+    if key_points[INFL_POINT] == 0:
+        key_points = {}
+        return key_points
 
     return key_points
 
