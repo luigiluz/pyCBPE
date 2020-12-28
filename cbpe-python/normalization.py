@@ -9,6 +9,10 @@ from pyampd.ampd import find_peaks
 def normalize(signal):
     minimals = _detect_minimals(signal)
     central_pulse = _get_central_pulse(signal, minimals)
+    if not central_pulse
+        normalized_pulse = []
+        return normalized_pulse
+
     normalized_pulse = _normalize_pulse(central_pulse)
 
     return normalized_pulse
@@ -22,6 +26,10 @@ def _detect_minimals(signal):
 
 def _get_central_pulse(signal, minimals):
     n_of_minimals = len(minimals)
+    if n_of_minimals < 2
+        central_pulse = []
+        return central_pulse
+
     central_minimal = int(np.floor(n_of_minimals / 2))
     minimal_after_central = central_minimal + 1
 
