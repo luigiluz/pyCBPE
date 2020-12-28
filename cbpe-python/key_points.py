@@ -24,8 +24,9 @@ PULSE_EVAL = "pulse_eval"
 
 
 def extract(normalized_pulse):
-    if not normalized_pulse:
-        key_points = []
+    is_normalized_pulse_empty = normalized_pulse.size == 0
+    if is_normalized_pulse_empty:
+        key_points = {}
         return key_points
 
     # group all key points in this dictionary
