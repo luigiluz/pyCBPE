@@ -10,6 +10,7 @@ import scipy as sp
 import preprocessing
 import normalization
 import key_points
+import features
 
 SYS_PEAK = "systolic peak"
 MAX_SLP = "max slope"
@@ -37,6 +38,14 @@ def main():
 
     print("### Run key_points ###")
     key_points_loc = key_points.extract(normalized_ppg_pulse)
+
+    print("key_points_loc:")
+    print(key_points_loc)
+
+    print("### Run features ###")
+    features_list = features.extract(sampling_freq, ppg_seg, normalized_ppg_pulse, key_points_loc)
+    print("features")
+    print(features_list)
 
     f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
 
