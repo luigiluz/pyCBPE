@@ -48,4 +48,4 @@ def _normalize_pulse(pulse_signal):
     # TO DO: Verify if this is returning the expecteed behavior
     norm_pulse = np.concatenate((norm_ascending_section, norm_descending_section[1:-1]))
 
-    return norm_pulse
+    return norm_pulse[:, 0]
