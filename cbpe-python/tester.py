@@ -8,6 +8,7 @@ import scipy as sp
 
 # Package modules
 import preprocessing
+import normalization
 
 ROOT_PATH = "/home/lfml-cesar/Documents/UACSA/cbpe-python"
 
@@ -22,6 +23,10 @@ def main():
     print("### Run preprocessing ###")
     preprocessed_ppg = preprocessing.preprocess(ppg_seg)
     t_pp = np.arange(0, len(preprocessed_ppg)/(4*sampling_freq), 1/(4*sampling_freq))
+
+    print("### Run normalization ###")
+    normalized_ppg_pulse = normalization.normalize(preprocessed_ppg)
+    t_norm = np.arange(0, len(normalized_ppg_pulse)/(4*sampling_freq), 1/(4*sampling_freq))
 
     f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
 
@@ -38,6 +43,10 @@ def main():
     #ax2.xlabel("Tempo (seg)")
     #ax2.ylabel("PPG Amplitude")
     #ax2.show()
+
+    plt.show()
+
+    plt.plot(t_norm, normalized_ppg_pulse)
 
     plt.show()
 
