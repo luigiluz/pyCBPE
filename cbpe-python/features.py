@@ -8,12 +8,8 @@ from scipy.interpolate import CubicSpline
 from scipy.signal import cheby1
 from scipy.signal import lfilter
 from scipy.fft import fft
+import constants as consts
 
-SYS_PEAK = "systolic peak"
-MAX_SLP = "max slope"
-DIAS_PEAK = "diastolic peak"
-DIC_NOTCH = "dicrotic notch"
-INFL_POINT = "inflection point"
 
 def extract(sampling_freq, ppg_segment, normalized_ppg_pulse, key_points):
     features = []
@@ -66,12 +62,12 @@ def _get_area_related_features(sampling_freq, normalized_ppg_pulse, key_points):
     t = np.arange(0, len(normalized_ppg_pulse) * ts, ts)
 
     # calculate area related features
-    max_slp_sys_peak_area = _area_between_two_points(t, normalized_ppg_pulse, key_points[MAX_SLP], key_points[SYS_PEAK])
-    sys_peak_dic_notch_area = _area_between_two_points(t, normalized_ppg_pulse, key_points[SYS_PEAK], key_points[DIC_NOTCH])
-    dic_notch_infl_point_area = _area_between_two_points(t, normalized_ppg_pulse, key_points[DIC_NOTCH], key_points[INFL_POINT])
-    infl_point_dias_peak = _area_between_two_points(t, normalized_ppg_pulse, key_points[INFL_POINT], key_points[DIAS_PEAK])
+    max_slp_sys_peak_area = _area_between_two_points(t, normalized_ppg_pulse, key_points[consts.MAX_SLP], key_points[consts.SYS_PEAK])
+    sys_peak_dic_notch_area = _area_between_two_points(t, normalized_ppg_pulse, key_points[consts.SYS_PEAK], key_points[consts.DIC_NOTCH])
+    dic_notch_infl_point_area = _area_between_two_points(t, normalized_ppg_pulse, key_points[consts.DIC_NOTCH], key_points[consts.INFL_POINT])
+    infl_point_dias_peak = _area_between_two_points(t, normalized_ppg_pulse, key_points[consts.INFL_POINT], key_points[consts.DIAS_PEAK])
     pulse_area = np.trapz(normalized_ppg_pulse, t)
-    infl_point_area = np.trapz(normalized_ppg_pulse[key_points[INFL_POINT]:-1], t[key_points[INFL_POINT]:-1]) / np.trapz(normalized_ppg_pulse[0:key_points[INFL_POINT]], t[0:key_points[INFL_POINT]])
+    infl_point_area = np.trapz(normalized_ppg_pulse[key_points[consts.INFL_POINT]:-1], t[key_points[consts.INFL_POINT]:-1]) / np.trapz(normalized_ppg_pulse[0:key_points[consts.INFL_POINT]], t[0:key_points[consts.INFL_POINT]])
 
     # append area related features to list
     area_related_features.append(max_slp_sys_peak_area)
@@ -96,10 +92,10 @@ def _get_amplitude_related_features(normalized_ppg_pulse, key_points):
     amplitude_related_features = []
 
     # calculate amplitude related features
-    max_slp_reflection_index = normalized_ppg_pulse[key_points[MAX_SLP]]
-    dias_peak_reflection_index = normalized_ppg_pulse[key_points[DIAS_PEAK]]
-    dic_notch_reflection_index = normalized_ppg_pulse[key_points[DIC_NOTCH]]
-    infl_point_reflection_index = normalized_ppg_pulse[key_points[INFL_POINT]]
+    max_slp_reflection_index = normalized_ppg_pulse[key_points[consts.MAX_SLP]]
+    dias_peak_reflection_index = normalized_ppg_pulse[key_points[consts.DIAS_PEAK]]
+    dic_notch_reflection_index = normalized_ppg_pulse[key_points[consts.DIC_NOTCH]]
+    infl_point_reflection_index = normalized_ppg_pulse[key_points[consts.INFL_POINT]]
 
     # append amplitude related features to list
     amplitude_related_features.append(max_slp_reflection_index)
@@ -117,12 +113,12 @@ def _get_time_related_features(sampling_freq, normalized_ppg_pulse, key_points):
     t = np.arange(0, len(normalized_ppg_pulse) * ts, ts)
 
     # calculate time related features
-    max_slp_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[MAX_SLP], key_points[SYS_PEAK])
-    dias_peak_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[SYS_PEAK], key_points[DIAS_PEAK])
-    dic_notch_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[SYS_PEAK], key_points[DIC_NOTCH])
-    infl_point_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[SYS_PEAK], key_points[INFL_POINT])
+    max_slp_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[consts.MAX_SLP], key_points[consts.SYS_PEAK])
+    dias_peak_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[consts.SYS_PEAK], key_points[consts.DIAS_PEAK])
+    dic_notch_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[consts.SYS_PEAK], key_points[consts.DIC_NOTCH])
+    infl_point_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[consts.SYS_PEAK], key_points[consts.INFL_POINT])
 
-    crest_time = t[key_points[SYS_PEAK]]
+    crest_time = t[key_points[consts.SYS_PEAK]]
 
     pulse_width = _get_signal_pulse_width(sampling_freq, normalized_ppg_pulse)
 
