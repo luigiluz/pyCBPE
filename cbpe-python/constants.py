@@ -1,8 +1,23 @@
 """ This module will contain all the constants used in cbpe-python package """
 
-ROOT_PATH = "/home/lfml-cesar/Documents/UACSA/cbpe-python"
+ROOT_PATH = "/home/luigi/git/cbpe-python"
+
 PPG_SEG_PATH = "/files/ppg_seg.csv"
 ABP_SEG_PATH = "/files/abp_seg.csv"
+
+PPG_SEG_MATRIX = "/files/ppg_matrix.csv"
+PPG_SEG_MATRIX_01 = "/files/ppg_matrix_01.csv"
+PPG_SEG_MATRIX_02 = "/files/ppg_matrix_02.csv"
+PPG_SEG_MATRIX_03 = "/files/ppg_matrix_03.csv"
+PPG_SEG_MATRIX_04 = "/files/ppg_matrix_04.csv"
+
+ABP_SEG_MATRIX = "/files/abp_matrix.csv"
+ABP_SEG_MATRIX_01 = "/files/abp_matrix_01.csv"
+ABP_SEG_MATRIX_02 = "/files/abp_matrix_02.csv"
+ABP_SEG_MATRIX_03 = "/files/abp_matrix_03.csv"
+ABP_SEG_MATRIX_04 = "/files/abp_matrix_04.csv"
+
+OUTPUT_PATH = "/files/features_and_labels_df.csv"
 
 SAMPLING_FREQ = 125
 
