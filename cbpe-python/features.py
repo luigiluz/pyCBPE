@@ -2,6 +2,7 @@
 signal feature extraction. """
 
 import numpy as np
+import scipy.signal
 from pyampd.ampd import find_peaks
 from scipy.interpolate import CubicSpline
 from scipy.signal import cheby1
@@ -123,6 +124,8 @@ def _get_time_related_features(sampling_freq, normalized_ppg_pulse, key_points):
 
     crest_time = t[key_points[SYS_PEAK]]
 
+    pulse_width = _get_signal_pulse_width(sampling_freq, normalized_ppg_pulse)
+
     # append time related features to list
     time_related_features.append(max_slp_sys_peak_lasi)
     time_related_features.append(dias_peak_sys_peak_lasi)
@@ -131,8 +134,7 @@ def _get_time_related_features(sampling_freq, normalized_ppg_pulse, key_points):
 
     time_related_features.append(crest_time)
 
-    # TO DO: investigate on how to implement pulse width
-    #time_related_features.append()
+    time_related_features.append(pulse_width)
 
     return time_related_features
 
@@ -145,6 +147,16 @@ def _get_inverse_of_time_interval(t, first_point, last_point):
         inverse_of_time_interval = 1 / time_interval
 
     return inverse_of_time_interval
+
+
+def _get_signal_pulse_width(sampling_freq, normalized_ppg_pulse):
+    peaks, _ = scipy.signal.find_peaks(normalized_ppg_pulse)
+    # rel_height tell the height to calculate the width
+    width, _, _, _ = scipy.signal.peak_widths(normalized_ppg_pulse, peaks, rel_height=0.5)
+
+    pulse_width = width[0] / sampling_freq
+
+    return pulse_width
 
 
 def _get_hrv_properites(sampling_freq, ppg_segment):
