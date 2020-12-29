@@ -12,11 +12,13 @@ import constants as consts
 
 
 def extract(sampling_freq, ppg_segment, normalized_ppg_pulse, key_points):
-    features = []
-
     is_key_points_empty = not bool(key_points)
     if is_key_points_empty:
+        features = np.zeros((1, len(consts.FEATURES_COLUMNS)))
+        features[0:len(consts.FEATURES_COLUMNS) - 1] = -1
         return features
+
+    features = []
 
     up_sampled_sampling_freq = 4 * sampling_freq
 
