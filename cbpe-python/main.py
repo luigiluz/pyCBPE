@@ -23,6 +23,10 @@ def main():
     ppg_seg = np.genfromtxt(consts.ROOT_PATH + consts.PPG_SEG_PATH, delimiter=',')
     abp_seg = np.genfromtxt(consts.ROOT_PATH + consts.ABP_SEG_PATH, delimiter=',')
 
+    # TO DO: Give a descriptive name to this dataframe
+    dataframe = pd.DataFrame(columns=consts.DATAFRAME_COLUMNS)
+    print(dataframe)
+
     # TO DO: Load entire dataset to preprocess
     # TO DO: Create a for loop to iterate through the entire dataset
 
@@ -41,13 +45,14 @@ def main():
     print("Running labels module...")
     labels_list = labels.extract(abp_seg)
 
-    list_to_dataframe = []
-    list_to_dataframe.extend(features_list)
-    list_to_dataframe.extend(labels_list)
-    print("list_to_dataframe")
-    print(list_to_dataframe)
+    to_append = []
+    to_append.extend(features_list)
+    to_append.extend(labels_list)
+    pd_series_to_append = pd.Series(to_append, index=dataframe.columns)
+    dataframe = dataframe.append(pd_series_to_append, ignore_index=True)
 
-    # TO DO: Create a dataframe to append lists to it
+    print(dataframe)
+
 
 if __name__ == "__main__":
     main()

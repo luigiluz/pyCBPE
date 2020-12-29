@@ -25,3 +25,63 @@ DESC_POL = "descending_pol"
 ASC_SEC_EVAL = "ascending_section_eval"
 DESC_SEC_EVAL = "descending_section_eval"
 PULSE_EVAL = "pulse_eval"
+
+# Features columns
+HEART_RATE = ["Heart rate"]
+MNPV = ["MNPV"]
+AREA_RELATED_FEATURES = [
+    "Max slope sys peak area",
+    "Sys peak dic notch area",
+    "Dic notch infl point area",
+    "Infl point dias peak area",
+    "Pulse area",
+    "Infl point area"
+]
+AMPLITUDE_RELATED_FEATURES = [
+    "Max slope reflection index",
+    "Dias peak reflection index",
+    "Dic notch reflection index",
+    "Infl point reflection index"
+]
+TIME_RELATED_FEATURES = [
+    "Max slope sys peak LASI",
+    "Dias peak sys peak LASI",
+    "Dic notch sys peak LASI",
+    "Infl point sys peak LASI",
+    "Crest time",
+    "Pulse width"
+]
+HRV_PROPERTIES = [
+    "Mean HRV",
+    "Std HRV",
+    "HRV total power",
+    "HRV low frequency",
+    "HRV high frequency",
+    "HRV lf/hf ratio"
+]
+NON_LINEAR_FUNCTIONS = [
+    "ln(Heart rate)",
+    "exp(Heart rate)",
+    "ln(mnpv)",
+    "exp(mnpv)",
+    "ln(dic_notch_refl_index)",
+    "ln(infl_pint_refl_index)",
+    "ln(hr * mnpv)"
+]
+FEATURES_COLUMNS = (
+                    HEART_RATE +
+                    MNPV +
+                    AREA_RELATED_FEATURES +
+                    AMPLITUDE_RELATED_FEATURES +
+                    TIME_RELATED_FEATURES +
+                    HRV_PROPERTIES +
+                    NON_LINEAR_FUNCTIONS
+                    )
+# Labels columns
+LABELS_COLUMNS = [
+    "Systolic blood pressure",
+    "Diastolic blood pressure",
+    "Mean absolute pressure"
+]
+# Dataframe columns
+DATAFRAME_COLUMNS = FEATURES_COLUMNS + LABELS_COLUMNS
