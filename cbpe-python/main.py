@@ -24,8 +24,7 @@ def main():
     abp_seg = np.genfromtxt(consts.ROOT_PATH + consts.ABP_SEG_PATH, delimiter=',')
 
     # TO DO: Give a descriptive name to this dataframe
-    dataframe = pd.DataFrame(columns=consts.DATAFRAME_COLUMNS)
-    print(dataframe)
+    features_and_labels_df = pd.DataFrame(columns=consts.FEATURES_AND_LABELS_COLUMNS)
 
     # TO DO: Load entire dataset to preprocess
     # TO DO: Create a for loop to iterate through the entire dataset
@@ -48,8 +47,9 @@ def main():
     to_append = []
     to_append.extend(features_list)
     to_append.extend(labels_list)
-    pd_series_to_append = pd.Series(to_append, index=dataframe.columns)
-    dataframe = dataframe.append(pd_series_to_append, ignore_index=True)
+    pd_series_to_append = pd.Series(to_append, index=features_and_labels_df.columns)
+    features_and_labels_df = features_and_labels_df.append(pd_series_to_append, ignore_index=True)
+    # End of for loop
 
     print(dataframe)
 
