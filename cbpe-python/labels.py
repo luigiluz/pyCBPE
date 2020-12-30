@@ -22,6 +22,10 @@ def extract(abp_segment):
 
 def _get_systolic_blood_pressure(abp_segment):
     maximals_locations = find_peaks(abp_segment)
+    if len(maximals_locations) == 0:
+        systolic_blood_pressure = -1
+        return systolic_blood_pressure
+
     maximals_values = abp_segment[maximals_locations]
     mean_maximal_values = np.mean(maximals_values)
     systolic_blood_pressure = int(np.floor(mean_maximal_values))
@@ -31,6 +35,10 @@ def _get_systolic_blood_pressure(abp_segment):
 
 def _get_diastolic_blood_pressure(abp_segment):
     minimals_locations = find_peaks(-abp_segment)
+    if len(minimals_locations) == 0:
+        diastolic_blood_presure = -1
+        return diastolic_blood_presure
+
     minimals_values = abp_segment[minimals_locations]
     mean_minimal_values = np.mean(minimals_values)
     diastolic_blood_presure = int(np.floor(mean_minimal_values))
