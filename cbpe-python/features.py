@@ -61,6 +61,9 @@ def _get_area_related_features(sampling_freq, normalized_ppg_pulse, key_points):
 
     ts = 1 / sampling_freq
     t = np.arange(0, len(normalized_ppg_pulse) * ts, ts)
+    if (len(normalized_ppg_pulse) != len(t)):
+        area_related_features = [-1] * len(consts.AREA_RELATED_FEATURES)
+        return area_related_features
 
     # calculate area related features
     max_slp_sys_peak_area = _area_between_two_points(t, normalized_ppg_pulse, key_points[consts.MAX_SLP], key_points[consts.SYS_PEAK])
