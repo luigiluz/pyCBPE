@@ -186,9 +186,13 @@ def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_po
     if not any(value_index):
         return diastolic_peak
 
+    ppg_pulse_second_derivative = pulse_second_derivative[consts.PULSE_EVAL]
+    ppg_pulse_second_derivative_at_roots = ppg_pulse_second_derivative[value_index]
     # TO DO: Consider add treatment to when value index has more than one value
-    if pulse_second_derivative[consts.PULSE_EVAL][value_index[0]] < 0:
-        diastolic_peak = np.where(t == t[value_index[0]])
+    if (ppg_pulse_second_derivative_at_roots[0]) < 0:
+        t_at_roots = t[value_index]
+        tmp_diastolic_peak = np.where(t == t_at_roots[0])
+        diastolic_peak = tmp_diastolic_peak[0][0]
         return diastolic_peak
 
     return diastolic_peak
@@ -244,6 +248,7 @@ def _find_inflection_poiint(pulse_second_derivative, key_points):
     if not any(is_in_interval):
         return inflection_point
 
-    inflection_point = np.where(t == t[is_in_interval])
+    tmp_inflection_point = np.where(t == t[is_in_interval])
+    inflection_point = tmp_inflection_point[0][0]
 
     return inflection_point
