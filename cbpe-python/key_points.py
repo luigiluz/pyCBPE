@@ -162,7 +162,7 @@ def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_po
     second_derivative_minimals = pyampd.ampd.find_peaks(-pulse_second_derivative[consts.PULSE_EVAL])
     second_derivative_min_after_sys_peak = second_derivative_minimals[second_derivative_minimals > key_points[consts.SYS_PEAK]]
 
-    if len(second_derivative_minimals > 0):
+    if len(second_derivative_min_after_sys_peak) > 0:
         # Validate if we should get the first or the last minimal
         diastolic_peak = second_derivative_min_after_sys_peak[0]
 
