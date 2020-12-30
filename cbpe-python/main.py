@@ -36,12 +36,10 @@ def main():
     # Create dataframe to store features and labels
     features_and_labels_df = pd.DataFrame(columns=consts.FEATURES_AND_LABELS_COLUMNS)
 
-    execution_time = np.zeros(100)
-
     # Beginning of for loop
+    total_execution_start_time = time.time()
     for segment_index in np.arange(0, execution_time.size):
     #for segment_index in ppg_matrix_df.columns:
-        process_start_time = time.time()
         print("Current segment index:")
         print(segment_index)
         ppg_seg = ppg_matrix_df.loc[:, segment_index].to_numpy()
@@ -67,23 +65,18 @@ def main():
         to_append.extend(labels_list)
         pd_series_to_append = pd.Series(to_append, index=features_and_labels_df.columns)
         features_and_labels_df = features_and_labels_df.append(pd_series_to_append, ignore_index=True)
-        process_stop_time = time.time()
-        execution_time[segment_index] = process_stop_time - process_start_time
     # End of for loop
+    total_execution_stop_time = time.time()
+    total_execution_time_sec = total_execution_stop_time - total_execution_start_time
+    total_execution_time_min = total_execution_time_sec / 60
+
+    print("Total execution time was:")
+    print(total_execution_time_min)
+    print("minutes.")
 
     # Export dataframe as a csv file
-    print("execution_time")
-    print(execution_time)
-
-    print("mean_execution_time")
-    print(np.mean(execution_time))
-
-    plt.stem(execution_time)
-    plt.xlabel("Iteracoes")
-    plt.ylabel("Tempo (segundos)")
-    plt.show()
-
-    # features_and_labels_df.to_csv(consts.ROOT_PATH + consts.OUTPUT_PATH, index=False)
+    features_and_labels_df.to_csv(consts.ROOT_PATH + consts.OUTPUT_PATH, index=False)
+    print("Features and labels dataframe successfully exported.")
 
 
 if __name__ == "__main__":
