@@ -3,6 +3,8 @@
 # Libraries
 import numpy as np
 import pandas as pd
+import time
+import matplotlib.pyplot as plt
 
 # Package modules
 import preprocessing
@@ -21,15 +23,27 @@ def main():
     print("Continuous Blood Pressure Estimation Framework")
 
     print("Loading datasets...")
-    ppg_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.PPG_SEG_MATRIX_01)
-    abp_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.ABP_SEG_MATRIX_01)
+    load_start_time = time.time()
+    ppg_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.PPG_SEG_MATRIX_01, header=None)
+    abp_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.ABP_SEG_MATRIX_01, header=None)
+    load_stop_time = time.time()
+    load_time_in_sec = load_stop_time - load_start_time
+    load_time_in_min = load_time_in_sec / 60
     print("Datasets successfully loaded!")
+    print("Time taken loading datasets: ")
+    print(load_time_in_min)
 
     # Create dataframe to store features and labels
     features_and_labels_df = pd.DataFrame(columns=consts.FEATURES_AND_LABELS_COLUMNS)
 
+    execution_time = np.zeros(100)
+
     # Beginning of for loop
-    for segment_index in ppg_matrix_df.columns:
+    for segment_index in np.arange(0, execution_time.size):
+    #for segment_index in ppg_matrix_df.columns:
+        process_start_time = time.time()
+        print("Current segment index:")
+        print(segment_index)
         ppg_seg = ppg_matrix_df.loc[:, segment_index].to_numpy()
         abp_seg = abp_matrix_df.loc[:, segment_index].to_numpy()
 
@@ -53,10 +67,23 @@ def main():
         to_append.extend(labels_list)
         pd_series_to_append = pd.Series(to_append, index=features_and_labels_df.columns)
         features_and_labels_df = features_and_labels_df.append(pd_series_to_append, ignore_index=True)
+        process_stop_time = time.time()
+        execution_time[segment_index] = process_stop_time - process_start_time
     # End of for loop
 
     # Export dataframe as a csv file
-    features_and_labels_df.to_csv(consts.ROOT_PATH + consts.OUTPUT_PATH, index=False)
+    print("execution_time")
+    print(execution_time)
+
+    print("mean_execution_time")
+    print(np.mean(execution_time))
+
+    plt.stem(execution_time)
+    plt.xlabel("Iteracoes")
+    plt.ylabel("Tempo (segundos)")
+    plt.show()
+
+    # features_and_labels_df.to_csv(consts.ROOT_PATH + consts.OUTPUT_PATH, index=False)
 
 
 if __name__ == "__main__":
