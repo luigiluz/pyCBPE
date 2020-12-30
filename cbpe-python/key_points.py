@@ -186,8 +186,9 @@ def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_po
     if not any(value_index):
         return diastolic_peak
 
-    if pulse_first_derivative[consts.PULSE_EVAL][value_index] and (pulse_second_derivative[consts.PULSE_EVAL][value_index] < 0):
-        diastolic_peak = np.where(t == t[value_index])
+    # TO DO: Consider add treatment to when value index has more than one value
+    if pulse_second_derivative[consts.PULSE_EVAL][value_index[0]] < 0:
+        diastolic_peak = np.where(t == t[value_index[0]])
         return diastolic_peak
 
     return diastolic_peak
