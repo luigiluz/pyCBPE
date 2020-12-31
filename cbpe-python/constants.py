@@ -6,19 +6,25 @@ PPG_SEG_PATH = "/files/ppg_seg.csv"
 ABP_SEG_PATH = "/files/abp_seg.csv"
 
 PPG_SEG_MATRIX = "/files/ppg_matrix.csv"
-PPG_SEG_MATRIX_01 = "/files/ppg_matrix_01.csv"
+PPG_SEG_MATRIX_01 = "/files/ppg_matrix_split_1.csv"
 PPG_SEG_MATRIX_02 = "/files/ppg_matrix_02.csv"
 PPG_SEG_MATRIX_03 = "/files/ppg_matrix_03.csv"
 PPG_SEG_MATRIX_04 = "/files/ppg_matrix_04.csv"
 
 ABP_SEG_MATRIX = "/files/abp_matrix.csv"
-ABP_SEG_MATRIX_01 = "/files/abp_matrix_01.csv"
+ABP_SEG_MATRIX_01 = "/files/abp_matrix_split_1.csv"
 ABP_SEG_MATRIX_02 = "/files/abp_matrix_02.csv"
 ABP_SEG_MATRIX_03 = "/files/abp_matrix_03.csv"
 ABP_SEG_MATRIX_04 = "/files/abp_matrix_04.csv"
 
+OUTPUT_PATH = "/files/features_and_labels_df_teste.csv"
 
-LINEAR_REGRESSOR_OUTPUT_PATH = "/files/estimators/linear_regressor.joblib"
+LINEAR_REGRESSOR_OUTPUT_PATH = "/files/estimators/linear_regressor/"
+LINEAR_REGRESSOR_JOBLIB_FILENAME = "linear_regressor.joblib"
+ALL_METRICS_FILENAME = "all_metrics.csv"
+BHS_METRICS_FILENAME = "bhs_metrics.csv"
+AAMI_METRICS_FILENAME = "aami_metrics.csv"
+STATS_METRICS_FILENAME = "stats_metrics.csv"
 
 SAMPLING_FREQ = 125
 
