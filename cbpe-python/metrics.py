@@ -50,6 +50,25 @@ MEAN_ABS_ERROR = "MAE "
 STD_DEV = "STD "
 CORRELATION = "CORR "
 
+def evaluate(model_name, y_true, y_pred):
+    stats_metrics = evaluate_stats_parameters(model_name, y_test, y_pred)
+    bhs_metrics = evaluate_bhs_standard(y_test, y_pred)
+    aami_metrics = evaluate_aami_standard(y_test, y_pred)
+
+    aami_columns = ["AAMI SBP", "AAMI DBP", "AAMI MAP"]
+    aami_results = aami_metrics.loc[:, AAMI_PASSED].to_numpy()
+    aami_tmp_df = pd.DataFrame(columns=aami_columns, index=[model_name])
+    aami_tmp_df.loc[model_name, :] = aami_results
+
+    bhs_columns = ["BHS SBP", "BHS DBP", "BHS MAP"]
+    bhs_results = bhs_metrics.loc[:, GRADE].to_numpy()
+    bhs_tmp_df = pd.DataFrame(columns=bhs_columns, index=[model_name])
+    bhs_tmp_df.loc[model_name, :] = bhs_results
+
+    all_metrics = pd.concat([stats_metrics, aami_tmp_df, bhs_tmp_df], axis=1)
+
+    return all_metrics, stats_metrics, bhs_metrics, aami_metrics
+
 
 def _evaluate_statistics(model_name, y_true, y_pred):
     sbp_df = evaluate_model_stats(consts.SBP, model_name,y_test[:, SBP_INDEX], y_pred[:, SBP_INDEX])
