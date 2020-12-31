@@ -4,10 +4,12 @@ import numpy as np
 import pandas as pd
 import constants as consts
 
+# Labels indexes
 SBP_INDEX = 0
 DBP_INDEX = 1
 MAP_INDEX = 2
 
+# BHS standard constants
 BHS_FIRST_THRESHOLD = "<= 5 mmHg"
 BHS_SECOND_THRESHOLD = "<= 10 mmHg"
 BHS_THIRD_THRESHOLD = "<= 15 mmHg"
@@ -31,7 +33,45 @@ GRADE_B = "B"
 GRADE_C = "C"
 GRADE_D = "D"
 
-def evaluate_bhs_standard(y_true, y_pred):
+# AAMI standard constants
+AAMI_ME_THRESHOLD = 5
+AAMI_STD_THRESHOLD = 8
+
+AAMI_ME_THRESHOLD_STR = "ME (<= 5 mmHg)"
+AAMI_STD_THRESHOLD_STR = "STD (<= 8 mmHg)"
+
+AAMI_PASSED = "Passed AAMI"
+YES = "Yes"
+NO = "No"
+
+
+def _evaluate_aami_standard(y_true, y_pred):
+    error = y_true - y_pred
+
+    sbp_me = np.round(np.mean(error[:, SBP_INDEX]), 2)
+    sbp_std = np.round(np.std(y_pred[:, SBP_INDEX]), 2)
+
+    dbp_me = np.round(np.mean(error[:, DBP_INDEX]), 2)
+    dbp_std = np.round(np.std(y_pred[:, DBP_INDEX]), 2)
+
+    map_me = np.round(np.mean(error[:, MAP_INDEX]), 2)
+    map_std = np.round(np.std(y_pred[:, MAP_INDEX]), 2)
+
+    aami_df = pd.DataFrame({AAMI_ME_THRESHOLD_STR [sbp_me, dbp_me, map_me],
+                           AAMI_STD_THRESHOLD_STR: [sbp_std, dbp_std, map_std]},
+                          index = consts.LABELS_COLUMNS)
+
+    me_condition = aami_df.loc[:, AAMI_ME_THRESHOLD_STR] < AAMI_ME_THRESHOLD
+    std_condition = aami_df.loc[:, AAMI_STD_THRESHOLD_STR] < AAMI_STD_THRESHOLD
+    passed_condition = me_condition & std_condition
+
+    aami_df.loc[:, AAMI_PASSED] = NO
+    aami_df.loc[passed_condition, AAMI_PASSED] = YES
+
+    return aami_df
+
+
+def _evaluate_bhs_standard(y_true, y_pred):
     (sbp_error5, sbp_error10, sbp_error15) = bhs_standard(y_true[:, SBP_INDEX], y_pred[:, SBP_INDEX])
     (dbp_error5, dbp_error10, dbp_error15) = bhs_standard(y_true[:, DBP_INDEX], y_pred[:, DBP_INDEX])
     (map_error5, map_error10, map_error15) = bhs_standard(y_true[:, MAP_INDEX], y_pred[:, MAP_INDEX])
