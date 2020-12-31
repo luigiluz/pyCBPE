@@ -173,6 +173,10 @@ def _get_hrv_properites(sampling_freq, ppg_segment):
     hrv_sampling_rate = 1 / hrv_sampling_freq
     interpolation_time = np.linspace(0, len(minimal_to_minimal_time_axis) * hrv_sampling_rate, num = len(minimal_to_minimal_time_axis), endpoint=False)
 
+    if len(minimal_to_minimal_time_axis) < 2:
+        hrv_properties = [-1] * len(consts.HRV_PROPERTIES)
+        return hrv_properties
+
     cubic_spline_interp = CubicSpline(minimal_to_minimal_time_axis, minimal_to_minimal_interval)
     hrv = cubic_spline_interp(interpolation_time)
 
