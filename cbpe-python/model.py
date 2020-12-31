@@ -4,6 +4,7 @@ import joblib
 import numpy as np
 from sklearn.metrics import make_scorer
 from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import GridSearchCV
 
 def train_regression(model_name, estimator, parameters, X_train, y_train):
     rmse_scorer = make_scorer(_root_mean_squared_error, greater_is_better=False)
