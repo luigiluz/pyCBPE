@@ -154,12 +154,15 @@ def _find_max_slope(pulse_first_derivative, key_points):
 
 
 def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_points):
-    ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
-    t = np.arange(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, ts)
-
     diastolic_peak = 0 # always returns 0 if the key point hasn't been detected
 
-    second_derivative_minimals = pyampd.ampd.find_peaks(-pulse_second_derivative[consts.PULSE_EVAL])
+    ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
+    t = np.arange(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, ts)
+    ppg_pulse_second_derivative = pulse_second_derivative[consts.PULSE_EVAL]
+    if len(ppg_pulse_second_derivative != len(t)):
+        return diastolic_peak
+
+    second_derivative_minimals = pyampd.ampd.find_peaks(-ppg_pulse_second_derivative)
     second_derivative_min_after_sys_peak = second_derivative_minimals[second_derivative_minimals > key_points[consts.SYS_PEAK]]
 
     if len(second_derivative_min_after_sys_peak) > 0:
@@ -186,7 +189,6 @@ def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_po
     if not any(value_index):
         return diastolic_peak
 
-    ppg_pulse_second_derivative = pulse_second_derivative[consts.PULSE_EVAL]
     ppg_pulse_second_derivative_at_roots = ppg_pulse_second_derivative[value_index]
     # TO DO: Consider add treatment to when value index has more than one value
     if (ppg_pulse_second_derivative_at_roots[0]) < 0:
