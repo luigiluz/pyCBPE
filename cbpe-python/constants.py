@@ -93,10 +93,13 @@ FEATURES_COLUMNS = (
                     NON_LINEAR_FUNCTIONS
                     )
 # Labels columns
+SBP = "Systolic blood pressure"
+DBP = "Diastolic blood pressure"
+MAP = "Mean absolute pressure"
 LABELS_COLUMNS = [
-    "Systolic blood pressure",
-    "Diastolic blood pressure",
-    "Mean absolute pressure"
+    SBP,
+    DBP,
+    MAP
 ]
 # Dataframe columns
 FEATURES_AND_LABELS_COLUMNS = FEATURES_COLUMNS + LABELS_COLUMNS

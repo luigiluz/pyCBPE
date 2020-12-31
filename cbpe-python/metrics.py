@@ -44,6 +44,42 @@ AAMI_PASSED = "Passed AAMI"
 YES = "Yes"
 NO = "No"
 
+# Statistics constants
+MEAN_ERROR = "ME "
+MEAN_ABS_ERROR = "MAE "
+STD_DEV = "STD "
+CORRELATION = "CORR "
+
+
+def _evaluate_statistics(model_name, y_true, y_pred):
+    sbp_df = evaluate_model_stats(consts.SBP, model_name,y_test[:, SBP_INDEX], y_pred[:, SBP_INDEX])
+    dbp_df = evaluate_model_stats(consts.DBP, model_name,y_test[:, DBP_INDEX], y_pred[:, DBP_INDEX])
+    mbp_df = evaluate_model_stats(consts.MAP, model_name,y_test[:, MAP_INDEX], y_pred[:, MAP_INDEX])
+
+    metrics_df = pd.concat([sbp_df, dbp_df, mbp_df], axis=1)
+
+    return metrics_df
+
+
+def _evaluate_model_stats(predicted_label, model_name, y_true, y_pred):
+    error = y_true - y_pred
+
+    ME = np.round(np.mean(error), 2)
+    MAE = np.round(mean_absolute_error(y_true, y_pred), 2)
+    STD = np.round(np.std(y_pred), 2)
+    CORR = np.round(np.corrcoef(y_true, y_pred)[0, 1], 2)
+
+    stats_df = pd.DataFrame(
+                        {
+                        MEAN_ERROR + predicted_parameter : [ME],
+                        MEAN_ABS_ERROR + predicted_parameter : [MAE],
+                        STD_DEV + predicted_parameter : [STD],
+                        CORRELATION + predicted_parameter : [CORR]
+                        },
+                        index = [model_name]
+                        )
+
+    return stats_df
 
 def _evaluate_aami_standard(y_true, y_pred):
     error = y_true - y_pred
