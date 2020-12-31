@@ -18,7 +18,7 @@ def handle(dataframe):
     handled_df = dataframe.copy()
 
     handled_df = handled_df.replace(-1, np.nan) # TO DO: Change -1 to a constant in constants.py
-    handled_df = handled_df.replace([np.inf -np.inf], np.nan)
+    handled_df = handled_df.replace([np.inf , -np.inf], np.nan)
     handled_df = handled_df.dropna()
 
     handled_df[consts.HEART_RATE] = handled_df[consts.HEART_RATE].astype(int)
