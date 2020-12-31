@@ -159,7 +159,8 @@ def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_po
     ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
     t = np.arange(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, ts)
     ppg_pulse_second_derivative = pulse_second_derivative[consts.PULSE_EVAL]
-    if len(ppg_pulse_second_derivative != len(t)):
+
+    if len(ppg_pulse_second_derivative) != len(t):
         return diastolic_peak
 
     second_derivative_minimals = pyampd.ampd.find_peaks(-ppg_pulse_second_derivative)
