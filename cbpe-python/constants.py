@@ -17,7 +17,8 @@ ABP_SEG_MATRIX_02 = "/files/abp_matrix_02.csv"
 ABP_SEG_MATRIX_03 = "/files/abp_matrix_03.csv"
 ABP_SEG_MATRIX_04 = "/files/abp_matrix_04.csv"
 
-OUTPUT_PATH = "/files/features_and_labels_df.csv"
+
+LINEAR_REGRESSOR_OUTPUT_PATH = "/files/estimators/linear_regressor.joblib"
 
 SAMPLING_FREQ = 125
 
