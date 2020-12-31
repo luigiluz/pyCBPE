@@ -60,7 +60,7 @@ def _get_area_related_features(sampling_freq, normalized_ppg_pulse, key_points):
     area_related_features = []
 
     ts = 1 / sampling_freq
-    t = np.arange(0, len(normalized_ppg_pulse) * ts, ts)
+    t = np.linspace(0, len(normalized_ppg_pulse) * ts, num=len(normalized_ppg_pulse), endpoint=False)
     if (len(normalized_ppg_pulse) != len(t)):
         area_related_features = [-1] * len(consts.AREA_RELATED_FEATURES)
         return area_related_features
@@ -114,7 +114,7 @@ def _get_time_related_features(sampling_freq, normalized_ppg_pulse, key_points):
     time_related_features = []
 
     ts = 1 / sampling_freq
-    t = np.arange(0, len(normalized_ppg_pulse) * ts, ts)
+    t = np.linspace(0, len(normalized_ppg_pulse) * ts, num = len(normalized_ppg_pulse), endpoint=False)
 
     # calculate time related features
     max_slp_sys_peak_lasi = _get_inverse_of_time_interval(t, key_points[consts.MAX_SLP], key_points[consts.SYS_PEAK])
@@ -171,7 +171,7 @@ def _get_hrv_properites(sampling_freq, ppg_segment):
 
     hrv_sampling_freq = 2.5 # in Hz
     hrv_sampling_rate = 1 / hrv_sampling_freq
-    interpolation_time = np.arange(0, len(minimal_to_minimal_time_axis) * hrv_sampling_rate, hrv_sampling_rate)
+    interpolation_time = np.linspace(0, len(minimal_to_minimal_time_axis) * hrv_sampling_rate, num = len(minimal_to_minimal_time_axis), endpoint=False)
 
     cubic_spline_interp = CubicSpline(minimal_to_minimal_time_axis, minimal_to_minimal_interval)
     hrv = cubic_spline_interp(interpolation_time)
@@ -187,6 +187,7 @@ def _get_hrv_properites(sampling_freq, ppg_segment):
     psd_hrv = np.power(abs_fft_hrv, 2)
     n_of_psd_samples = len(psd_hrv)
 
+    # to do: consider adapting this to use np.linspace
     psd_frequency_axis = np.arange(0, hrv_sampling_freq / 2, hrv_sampling_freq / (2*n_of_psd_samples))
 
     low_frequency = (0.04 < psd_frequency_axis) & (psd_frequency_axis < 0.15)

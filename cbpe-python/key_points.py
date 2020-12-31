@@ -65,7 +65,8 @@ def _find_systolic_peak_location(normalized_pulse):
 
 def _fit_section_polynoms(normalized_pulse, systolic_peak):
     pulse_length = len(normalized_pulse)
-    pulse_time = np.arange(0, pulse_length / (4*consts.SAMPLING_FREQ), 1 / (4*consts.SAMPLING_FREQ))
+    up_sampled_rate = 1 / (4*consts.SAMPLING_FREQ)
+    pulse_time = np.linspace(0, pulse_length * up_sampled_rate, num = pulse_length, endpoint=False)
 
     ascending_section, descending_section = _separate_pulse_in_sections(normalized_pulse, systolic_peak)
 
@@ -155,10 +156,9 @@ def _find_max_slope(pulse_first_derivative, key_points):
 
 def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_points):
     diastolic_peak = 0 # always returns 0 if the key point hasn't been detected
-
-    ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
-    t = np.arange(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, ts)
     ppg_pulse_second_derivative = pulse_second_derivative[consts.PULSE_EVAL]
+    ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
+    t = np.linspace(0, len(ppg_pulse_second_derivative) * ts, num=len(ppg_pulse_second_derivative), endpoint=False)
 
     if len(ppg_pulse_second_derivative) != len(t):
         return diastolic_peak
@@ -217,7 +217,7 @@ def _find_dicrotic_notch(pulse_second_derivative, key_points):
 
 def _find_inflection_point(pulse_second_derivative, key_points):
     ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
-    t = np.arange(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, ts)
+    t = np.linspace(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, num=len(pulse_second_derivative[consts.PULSE_EVAL]), endpoint=False)
 
     inflection_point = 0 # always returns 0 if the key point hasn't been detected
 
