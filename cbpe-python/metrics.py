@@ -1,5 +1,7 @@
 """ This is the package responsible for evaluating an estimator. """
 
+from sklearn.metrics import mean_absolute_error
+
 import numpy as np
 import pandas as pd
 import constants as consts
@@ -51,9 +53,9 @@ STD_DEV = "STD "
 CORRELATION = "CORR "
 
 def evaluate(model_name, y_true, y_pred):
-    stats_metrics = evaluate_stats_parameters(model_name, y_test, y_pred)
-    bhs_metrics = evaluate_bhs_standard(y_test, y_pred)
-    aami_metrics = evaluate_aami_standard(y_test, y_pred)
+    stats_metrics = _evaluate_statistics(model_name, y_true, y_pred)
+    bhs_metrics = _evaluate_bhs_standard(y_true, y_pred)
+    aami_metrics = _evaluate_aami_standard(y_true, y_pred)
 
     aami_columns = ["AAMI SBP", "AAMI DBP", "AAMI MAP"]
     aami_results = aami_metrics.loc[:, AAMI_PASSED].to_numpy()
@@ -71,9 +73,9 @@ def evaluate(model_name, y_true, y_pred):
 
 
 def _evaluate_statistics(model_name, y_true, y_pred):
-    sbp_df = evaluate_model_stats(consts.SBP, model_name,y_test[:, SBP_INDEX], y_pred[:, SBP_INDEX])
-    dbp_df = evaluate_model_stats(consts.DBP, model_name,y_test[:, DBP_INDEX], y_pred[:, DBP_INDEX])
-    mbp_df = evaluate_model_stats(consts.MAP, model_name,y_test[:, MAP_INDEX], y_pred[:, MAP_INDEX])
+    sbp_df = _evaluate_model_stats(consts.SBP, model_name, y_true[:, SBP_INDEX], y_pred[:, SBP_INDEX])
+    dbp_df = _evaluate_model_stats(consts.DBP, model_name, y_true[:, DBP_INDEX], y_pred[:, DBP_INDEX])
+    mbp_df = _evaluate_model_stats(consts.MAP, model_name, y_true[:, MAP_INDEX], y_pred[:, MAP_INDEX])
 
     metrics_df = pd.concat([sbp_df, dbp_df, mbp_df], axis=1)
 
@@ -90,10 +92,10 @@ def _evaluate_model_stats(predicted_label, model_name, y_true, y_pred):
 
     stats_df = pd.DataFrame(
                         {
-                        MEAN_ERROR + predicted_parameter : [ME],
-                        MEAN_ABS_ERROR + predicted_parameter : [MAE],
-                        STD_DEV + predicted_parameter : [STD],
-                        CORRELATION + predicted_parameter : [CORR]
+                        MEAN_ERROR + predicted_label : [ME],
+                        MEAN_ABS_ERROR + predicted_label : [MAE],
+                        STD_DEV + predicted_label : [STD],
+                        CORRELATION + predicted_label : [CORR]
                         },
                         index = [model_name]
                         )
@@ -112,7 +114,7 @@ def _evaluate_aami_standard(y_true, y_pred):
     map_me = np.round(np.mean(error[:, MAP_INDEX]), 2)
     map_std = np.round(np.std(y_pred[:, MAP_INDEX]), 2)
 
-    aami_df = pd.DataFrame({AAMI_ME_THRESHOLD_STR [sbp_me, dbp_me, map_me],
+    aami_df = pd.DataFrame({AAMI_ME_THRESHOLD_STR: [sbp_me, dbp_me, map_me],
                            AAMI_STD_THRESHOLD_STR: [sbp_std, dbp_std, map_std]},
                           index = consts.LABELS_COLUMNS)
 
@@ -127,9 +129,9 @@ def _evaluate_aami_standard(y_true, y_pred):
 
 
 def _evaluate_bhs_standard(y_true, y_pred):
-    (sbp_error5, sbp_error10, sbp_error15) = bhs_standard(y_true[:, SBP_INDEX], y_pred[:, SBP_INDEX])
-    (dbp_error5, dbp_error10, dbp_error15) = bhs_standard(y_true[:, DBP_INDEX], y_pred[:, DBP_INDEX])
-    (map_error5, map_error10, map_error15) = bhs_standard(y_true[:, MAP_INDEX], y_pred[:, MAP_INDEX])
+    (sbp_error5, sbp_error10, sbp_error15) = _bhs_standard(y_true[:, SBP_INDEX], y_pred[:, SBP_INDEX])
+    (dbp_error5, dbp_error10, dbp_error15) = _bhs_standard(y_true[:, DBP_INDEX], y_pred[:, DBP_INDEX])
+    (map_error5, map_error10, map_error15) = _bhs_standard(y_true[:, MAP_INDEX], y_pred[:, MAP_INDEX])
 
     bhs_df = pd.DataFrame({BHS_FIRST_THRESHOLD : [sbp_error5, dbp_error5, map_error5],
                            BHS_SECOND_THRESHOLD : [sbp_error10, dbp_error10, map_error10],
@@ -144,7 +146,7 @@ def _evaluate_bhs_standard(y_true, y_pred):
     is_greater_than_c_2nd = bhs_df.loc[:, BHS_SECOND_THRESHOLD] > BHS_GRADE_C_2ND_LIMIT
     is_greater_than_c_3rd = bhs_df.loc[:, BHS_THIRD_THRESHOLD] > BHS_GRADE_C_3RD_LIMIT
 
-    is_grade_c = is_greater_than_c_frst & is_greater_than_c_scnd & is_greater_than_c_third
+    is_grade_c = is_greater_than_c_1st & is_greater_than_c_2nd & is_greater_than_c_3rd
 
     bhs_df.loc[is_grade_c, GRADE] = GRADE_C
 
@@ -153,16 +155,16 @@ def _evaluate_bhs_standard(y_true, y_pred):
     is_greater_than_b_2nd = bhs_df.loc[:, BHS_SECOND_THRESHOLD] > BHS_GRADE_B_2ND_LIMIT
     is_greater_than_b_3rd = bhs_df.loc[:, BHS_THIRD_THRESHOLD] > BHS_GRADE_B_3RD_LIMIT
 
-    is_grade_b = is_greater_than_b_frst & is_greater_than_b_scnd & is_greater_than_b_third
+    is_grade_b = is_greater_than_b_1st & is_greater_than_b_2nd & is_greater_than_b_3rd
 
     bhs_df.loc[is_grade_b, GRADE] = GRADE_B
 
     # Check if it is grade A
-    is_greater_than_c_1st = bhs_df.loc[:, BHS_FIRST_THRESHOLD] > BHS_GRADE_A_1ST_LIMIT
-    is_greater_than_c_2nd = bhs_df.loc[:, BHS_SECOND_THRESHOLD] > BHS_GRADE_A_2ND_LIMIT
-    is_greater_than_c_3rd = bhs_df.loc[:, BHS_THIRD_THRESHOLD] > BHS_GRADE_A_3RD_LIMIT
+    is_greater_than_a_1st = bhs_df.loc[:, BHS_FIRST_THRESHOLD] > BHS_GRADE_A_1ST_LIMIT
+    is_greater_than_a_2nd = bhs_df.loc[:, BHS_SECOND_THRESHOLD] > BHS_GRADE_A_2ND_LIMIT
+    is_greater_than_a_3rd = bhs_df.loc[:, BHS_THIRD_THRESHOLD] > BHS_GRADE_A_3RD_LIMIT
 
-    is_grade_a = is_greater_than_a_frst & is_greater_than_a_scnd & is_greater_than_a_third
+    is_grade_a = is_greater_than_a_1st & is_greater_than_a_2nd & is_greater_than_a_3rd
 
     bhs_df.loc[is_grade_a, GRADE] = GRADE_A
 
@@ -172,9 +174,9 @@ def _evaluate_bhs_standard(y_true, y_pred):
 def _bhs_standard(y_true, y_pred):
     absolute_error = abs(y_true - y_pred)
 
-    error5 = np.round(cumulative_error_percentage(absolute_error, 5), 2)
-    error10 = np.round(cumulative_error_percentage(absolute_error, 10), 2)
-    error15 = np.round(cumulative_error_percentage(absolute_error, 15), 2)
+    error5 = np.round(_cumulative_error_percentage(absolute_error, 5), 2)
+    error10 = np.round(_cumulative_error_percentage(absolute_error, 10), 2)
+    error15 = np.round(_cumulative_error_percentage(absolute_error, 15), 2)
 
     return (error5, error10, error15)
 
