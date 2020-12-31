@@ -43,7 +43,7 @@ def extract(normalized_pulse):
         key_points = {}
         return key_points
 
-    key_points[consts.INFL_POINT] = _find_inflection_poiint(pulse_second_derivative, key_points)
+    key_points[consts.INFL_POINT] = _find_inflection_point(pulse_second_derivative, key_points)
     if key_points[consts.INFL_POINT] == 0:
         key_points = {}
         return key_points
@@ -214,7 +214,7 @@ def _find_dicrotic_notch(pulse_second_derivative, key_points):
     return dicrotic_notch
 
 
-def _find_inflection_poiint(pulse_second_derivative, key_points):
+def _find_inflection_point(pulse_second_derivative, key_points):
     ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
     t = np.arange(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, ts)
 
