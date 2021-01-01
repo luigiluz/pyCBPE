@@ -3,7 +3,7 @@ for features and labels previously generated. """
 
 import pandas as pd
 import numpy as np
-import constants as consts
+import pyCBPE.constants as consts
 
 def load(filepath):
     """ Load dataset from filepat and return it as a pandas dataframe. """

@@ -3,7 +3,7 @@ pulse key points extraction. """
 
 import numpy as np
 import pyampd
-import constants as consts
+import pyCBPE.constants as consts
 
 
 def extract(normalized_pulse):

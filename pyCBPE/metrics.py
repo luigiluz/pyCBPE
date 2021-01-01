@@ -4,7 +4,7 @@ from sklearn.metrics import mean_absolute_error
 
 import numpy as np
 import pandas as pd
-import constants as consts
+import pyCBPE.constants as consts
 
 # Labels indexes
 SBP_INDEX = 0

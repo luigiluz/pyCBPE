@@ -10,10 +10,13 @@ REQUIREMENTS := -r requirements.txt
 PRE_COMMIT := $(BIN)/pre-commit
 
 run:
-	$(PYTHON) pyCBPE/main.py
+	$(PYTHON) scripts/main.py
 
 tester:
-	$(PYTHON) pyCBPE/tester.py
+	$(PYTHON) scripts/tester.py
+
+generate_model:
+	$(PYTHON) scripts/generate_model.py
 
 bootstrap: venv \
 			requirements \

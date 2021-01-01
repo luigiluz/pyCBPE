@@ -3,7 +3,7 @@ photoplethysmogram signals. """
 
 import numpy as np
 from scipy import signal
-import constants as consts
+import pyCBPE.constants as consts
 
 
 def preprocess(signal):

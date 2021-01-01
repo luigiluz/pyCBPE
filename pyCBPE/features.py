@@ -8,7 +8,7 @@ from scipy.interpolate import CubicSpline
 from scipy.signal import cheby1
 from scipy.signal import lfilter
 from scipy.fft import fft
-import constants as consts
+import pyCBPE.constants as consts
 
 
 def extract(sampling_freq, ppg_segment, normalized_ppg_pulse, key_points):

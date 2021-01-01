@@ -4,7 +4,7 @@
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from pyampd.ampd import find_peaks
-import constants as consts
+import pyCBPE.constants as consts
 
 
 def normalize(signal):
