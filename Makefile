@@ -9,11 +9,11 @@ PIP := $(BIN)/pip
 REQUIREMENTS := -r requirements.txt
 PRE_COMMIT := $(BIN)/pre-commit
 
-run:
-	$(PYTHON) scripts/main.py
+generate_dataset:
+	$(PYTHON) scripts/generate_dataset.py
 
-tester:
-	$(PYTHON) scripts/tester.py
+plot_key_points:
+	$(PYTHON) scripts/plot_key_points.py
 
 generate_model:
 	$(PYTHON) scripts/generate_model.py
