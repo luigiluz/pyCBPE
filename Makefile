@@ -1,4 +1,4 @@
-PYTHON_MODULES := cbpe-python
+PYTHON_MODULES := pyCBPE
 PYTHONPATH := .
 VENV := venv
 BIN := $(VENV)/bin
@@ -10,10 +10,10 @@ REQUIREMENTS := -r requirements.txt
 PRE_COMMIT := $(BIN)/pre-commit
 
 run:
-	$(PYTHON) cbpe-python/main.py
+	$(PYTHON) pyCBPE/main.py
 
 tester:
-	$(PYTHON) cbpe-python/tester.py
+	$(PYTHON) pyCBPE/tester.py
 
 bootstrap: venv \
 			requirements \
