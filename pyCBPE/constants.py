@@ -1,24 +1,21 @@
-""" This module will contain all the constants used in cbpe-python package """
+""" This module will contain all the constants used in pyCBPE package """
 
-ROOT_PATH = "/home/luigi/git/cbpe-python"
+ROOT_PATH = "/home/luigi/git/pyCBPE"
 
-PPG_SEG_PATH = "/files/ppg_seg.csv"
-ABP_SEG_PATH = "/files/abp_seg.csv"
+# Dataset paths
+PPG_SEG_PATH = "/files/dataset/ppg_seg.csv"
+ABP_SEG_PATH = "/files/dataset/abp_seg.csv"
 
-PPG_SEG_MATRIX = "/files/ppg_matrix.csv"
-PPG_SEG_MATRIX_01 = "/files/ppg_matrix_split_1.csv"
-PPG_SEG_MATRIX_02 = "/files/ppg_matrix_02.csv"
-PPG_SEG_MATRIX_03 = "/files/ppg_matrix_03.csv"
-PPG_SEG_MATRIX_04 = "/files/ppg_matrix_04.csv"
+PPG_SEG_MATRIX = "/files/dataset/ppg_matrix.csv"
+ABP_SEG_MATRIX = "/files/dataset/abp_matrix.csv"
 
-ABP_SEG_MATRIX = "/files/abp_matrix.csv"
-ABP_SEG_MATRIX_01 = "/files/abp_matrix_split_1.csv"
-ABP_SEG_MATRIX_02 = "/files/abp_matrix_02.csv"
-ABP_SEG_MATRIX_03 = "/files/abp_matrix_03.csv"
-ABP_SEG_MATRIX_04 = "/files/abp_matrix_04.csv"
+PPG_SEG_MATRIX_1 = "/files/dataset/ppg_matrix_split_1.csv"
+ABP_SEG_MATRIX_1 = "/files/dataset/abp_matrix_split_1.csv"
 
-OUTPUT_PATH = "/files/features_and_labels_df_teste.csv"
+OUTPUT_PATH = "/files/dataset/features_and_labels_df.csv"
 
+
+# Estimators paths
 LINEAR_REGRESSOR_OUTPUT_PATH = "/files/estimators/linear_regressor/"
 LINEAR_REGRESSOR_JOBLIB_FILENAME = "linear_regressor.joblib"
 ALL_METRICS_FILENAME = "all_metrics.csv"
@@ -26,6 +23,8 @@ BHS_METRICS_FILENAME = "bhs_metrics.csv"
 AAMI_METRICS_FILENAME = "aami_metrics.csv"
 STATS_METRICS_FILENAME = "stats_metrics.csv"
 
+
+# Code related paths
 SAMPLING_FREQ = 125
 
 # PPG Signal key points dictionary keys
