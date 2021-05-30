@@ -153,7 +153,11 @@ def _find_max_slope(pulse_first_derivative, key_points):
 
     return max_slope
 
-
+# We consider the diastolic peak to be the point at which the first
+# derivative of the polynomial is equal to zero and the second
+# derivative is negative. If there is no such point, then the point
+# at which the second derivative is a local minimum is chosen
+# as the diastolic peak.
 def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_points):
     diastolic_peak = 0 # always returns 0 if the key point hasn't been detected
     ppg_pulse_second_derivative = pulse_second_derivative[consts.PULSE_EVAL]
@@ -200,7 +204,9 @@ def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_po
 
     return diastolic_peak
 
-
+# The dicrotic notch is a point
+# where the second derivative of the PPG signal is a local
+# maximum and is located before the diastolic peak.
 def _find_dicrotic_notch(pulse_second_derivative, key_points):
     dicrotic_notch = 0 # always returns 0 if the key point hasn't been detected
 
@@ -210,11 +216,16 @@ def _find_dicrotic_notch(pulse_second_derivative, key_points):
 
     second_derivative_maximals_between_sys_and_dias_peak = second_derivative_maximals[after_sys_peak & before_dias_peak]
     if (len(second_derivative_maximals_between_sys_and_dias_peak) > 0):
+        # talvez considerar pegar o maior maximo local
         dicrotic_notch = second_derivative_maximals_between_sys_and_dias_peak[0]
 
     return dicrotic_notch
 
-
+# The inflection point lies
+# between the dicrotic notch and the diastolic peak. At this
+# point, the second derivative of the PPG signal is equal to zero.
+# If no such point exists, the inflection point is chosen to be the
+# midpoint between the dicrotic notch and the diastolic peak.
 def _find_inflection_point(pulse_second_derivative, key_points):
     ts = np.round(1/(4*consts.SAMPLING_FREQ), 3)
     t = np.linspace(0, len(pulse_second_derivative[consts.PULSE_EVAL]) * ts, num=len(pulse_second_derivative[consts.PULSE_EVAL]), endpoint=False)
