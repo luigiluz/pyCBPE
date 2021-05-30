@@ -184,8 +184,9 @@ def _find_diastolic_peak(pulse_first_derivative, pulse_second_derivative, key_po
     is_real = np.isreal(positive_roots)
     real_roots = positive_roots[is_real]
     first_real_root = real_roots[0]
-    min_root = first_real_root - ts
-    max_root = first_real_root + ts
+
+    min_root = first_real_root - ts/2
+    max_root = first_real_root + ts/2
 
     is_greater_than_min = t > min_root
     is_less_than_max = t < max_root
@@ -252,8 +253,9 @@ def _find_inflection_point(pulse_second_derivative, key_points):
         return inflection_point
 
     first_real_root_in_interval = real_roots[0]
-    min_root = first_real_root_in_interval - ts
-    max_root = first_real_root_in_interval + ts
+
+    min_root = first_real_root_in_interval - ts/2
+    max_root = first_real_root_in_interval + ts/2
 
     is_greater_than_min = t > min_root
     is_less_than_max = t < max_root
