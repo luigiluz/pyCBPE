@@ -141,7 +141,7 @@ def _evaluate_bhs_standard(y_true, y_pred):
     # Consider all grades as D
     bhs_df.loc[:, GRADE] = GRADE_D
 
-    # Check if it is grade B
+    # Check if it is grade C
     is_greater_than_c_1st = bhs_df.loc[:, BHS_FIRST_THRESHOLD] > BHS_GRADE_C_1ST_LIMIT
     is_greater_than_c_2nd = bhs_df.loc[:, BHS_SECOND_THRESHOLD] > BHS_GRADE_C_2ND_LIMIT
     is_greater_than_c_3rd = bhs_df.loc[:, BHS_THIRD_THRESHOLD] > BHS_GRADE_C_3RD_LIMIT
