@@ -98,8 +98,8 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
         consts.PULSE_EVAL: np.zeros(ascending_len + descending_len)
     }
 
-    ascending_time = pulse_time[0:systolic_peak]
-    descending_time = pulse_time[systolic_peak + 1 : -1]
+    ascending_time = pulse_time[0:systolic_peak + 1]
+    descending_time = pulse_time[systolic_peak: len(pulse_time)]
 
     ###### without derivative ######
     # fit sections polynoms
@@ -109,7 +109,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
     regular_pulse[consts.ASC_SEC_EVAL] = np.polyval(regular_pulse[consts.ASC_POL], ascending_time)
     regular_pulse[consts.DESC_SEC_EVAL] = np.polyval(regular_pulse[consts.DESC_POL], descending_time)
     # concatenate sections polynoms
-    regular_pulse[consts.PULSE_EVAL] = np.concatenate((regular_pulse[consts.ASC_SEC_EVAL], regular_pulse[consts.DESC_SEC_EVAL]))
+    regular_pulse[consts.PULSE_EVAL] = np.concatenate((regular_pulse[consts.ASC_SEC_EVAL][0:-1], regular_pulse[consts.DESC_SEC_EVAL]))
 
     ###### first derivative ######
     # fit sections first derivatives polynoms
@@ -119,7 +119,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
     pulse_first_derivative[consts.ASC_SEC_EVAL] = np.polyval(pulse_first_derivative[consts.ASC_POL], ascending_time)
     pulse_first_derivative[consts.DESC_SEC_EVAL] = np.polyval(pulse_first_derivative[consts.DESC_POL], descending_time)
     # concatenate first derivates sections polynoms
-    pulse_first_derivative[consts.PULSE_EVAL] = np.concatenate((pulse_first_derivative[consts.ASC_SEC_EVAL], pulse_first_derivative[consts.DESC_SEC_EVAL]))
+    pulse_first_derivative[consts.PULSE_EVAL] = np.concatenate((pulse_first_derivative[consts.ASC_SEC_EVAL][0:-1], pulse_first_derivative[consts.DESC_SEC_EVAL]))
 
     ###### second derivative ######
     # fit sections second derivatives polynoms
@@ -129,7 +129,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
     pulse_second_derivative[consts.ASC_SEC_EVAL] = np.polyval(pulse_second_derivative[consts.ASC_POL], ascending_time)
     pulse_second_derivative[consts.DESC_SEC_EVAL] = np.polyval(pulse_second_derivative[consts.DESC_POL], descending_time)
     # concatenate second derivatives sections polynoms
-    pulse_second_derivative[consts.PULSE_EVAL] = np.concatenate((pulse_second_derivative[consts.ASC_SEC_EVAL], pulse_second_derivative[consts.DESC_SEC_EVAL]))
+    pulse_second_derivative[consts.PULSE_EVAL] = np.concatenate((pulse_second_derivative[consts.ASC_SEC_EVAL][0:-1], pulse_second_derivative[consts.DESC_SEC_EVAL]))
 
     return regular_pulse, pulse_first_derivative, pulse_second_derivative
 
@@ -137,7 +137,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
 # todo: change this to receive key_points dict
 def _separate_pulse_in_sections(normalized_pulse, systolic_peak):
     ascending_section = normalized_pulse[0 : systolic_peak]
-    descending_section = normalized_pulse[systolic_peak + 1 : -1]
+    descending_section = normalized_pulse[systolic_peak: len(normalized_pulse)]
 
     return ascending_section, descending_section
 
