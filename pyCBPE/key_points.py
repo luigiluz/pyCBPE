@@ -54,11 +54,14 @@ def extract(normalized_pulse):
 def _find_systolic_peak_location(normalized_pulse):
     systolic_peak = 0
 
-    peaks = pyampd.ampd.find_peaks(normalized_pulse)
-    if len(peaks) == 0:
+    max_location = np.where(normalized_pulse == np.max(normalized_pulse))
+    max_location_value = max_location[0][0]
+
+    # peaks = pyampd.ampd.find_peaks(normalized_pulse)
+    if max_location[0].size == 0:
         return systolic_peak
 
-    systolic_peak = peaks[0]
+    systolic_peak = max_location_value
 
     return systolic_peak
 
@@ -79,7 +82,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
         consts.DESC_POL : np.zeros(consts.DESCENDING_POL_N_OF_COEFS),
         consts.ASC_SEC_EVAL : np.zeros(ascending_len),
         consts.DESC_SEC_EVAL : np.zeros(descending_len),
-        consts.PULSE_EVAL: np.zeros(ascending_len + descending_len)
+        consts.PULSE_EVAL: np.zeros(ascending_len + descending_len - 1)
     }
 
     pulse_first_derivative = {
@@ -87,7 +90,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
         consts.DESC_POL : np.zeros(consts.DESCENDING_POL_N_OF_COEFS),
         consts.ASC_SEC_EVAL : np.zeros(ascending_len),
         consts.DESC_SEC_EVAL : np.zeros(descending_len),
-        consts.PULSE_EVAL: np.zeros(ascending_len + descending_len)
+        consts.PULSE_EVAL: np.zeros(ascending_len + descending_len - 1)
     }
 
     pulse_second_derivative = {
@@ -95,7 +98,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
         consts.DESC_POL : np.zeros(consts.DESCENDING_POL_N_OF_COEFS),
         consts.ASC_SEC_EVAL : np.zeros(ascending_len),
         consts.DESC_SEC_EVAL : np.zeros(descending_len),
-        consts.PULSE_EVAL: np.zeros(ascending_len + descending_len)
+        consts.PULSE_EVAL: np.zeros(ascending_len + descending_len - 1)
     }
 
     ascending_time = pulse_time[0:systolic_peak + 1]
@@ -136,7 +139,7 @@ def _fit_section_polynoms(normalized_pulse, systolic_peak):
 
 # todo: change this to receive key_points dict
 def _separate_pulse_in_sections(normalized_pulse, systolic_peak):
-    ascending_section = normalized_pulse[0 : systolic_peak]
+    ascending_section = normalized_pulse[0 : systolic_peak + 1]
     descending_section = normalized_pulse[systolic_peak: len(normalized_pulse)]
 
     return ascending_section, descending_section
