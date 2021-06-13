@@ -21,8 +21,6 @@ OUTPUT_PATH = "/files/dataset/features_and_labels_df.csv"
 
 
 # Estimators paths
-LINEAR_REGRESSOR_OUTPUT_PATH = "/files/estimators/linear_regressor/"
-LINEAR_REGRESSOR_JOBLIB_FILENAME = "linear_regressor.joblib"
 ALL_METRICS_FILENAME = "all_metrics.csv"
 BHS_METRICS_FILENAME = "bhs_metrics.csv"
 AAMI_METRICS_FILENAME = "aami_metrics.csv"
