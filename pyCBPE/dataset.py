@@ -5,11 +5,16 @@ import pandas as pd
 import numpy as np
 import pyCBPE.constants as consts
 
-def load(filepath):
+def load():
     """ Load dataset from filepat and return it as a pandas dataframe. """
-    dataframe = pd.read_csv(filepath, index_col=False, header=0)
+    df_split_1 = pd.read_csv(consts.FEATURES_AND_LABELS_DF_SPLIT_1_PATH, index_col=False, header=0)
+    df_split_2 = pd.read_csv(consts.FEATURES_AND_LABELS_DF_SPLIT_2_PATH, index_col=False, header=0)
+    df_split_3 = pd.read_csv(consts.FEATURES_AND_LABELS_DF_SPLIT_3_PATH, index_col=False, header=0)
+    df_split_4 = pd.read_csv(consts.FEATURES_AND_LABELS_DF_SPLIT_4_PATH, index_col=False, header=0)
 
-    return dataframe
+    dataframe = pd.concat([df_split_1, df_split_2, df_split_3, df_split_4])
+
+    return dataframe.reset_index()
 
 
 def handle(dataframe):

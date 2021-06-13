@@ -16,7 +16,8 @@ def main():
     print("##### Continuous Blood Pressure Estimation Framework #####")
     print("### Model generator script ###")
 
-    features_and_labels_df = pyCBPE.dataset.load(consts.ROOT_PATH + consts.OUTPUT_PATH)
+    features_and_labels_df = pyCBPE.dataset.load()
+
     features_and_labels_df = pyCBPE.dataset.handle(features_and_labels_df)
 
     features_array = pyCBPE.dataset.get_features_as_array(features_and_labels_df)

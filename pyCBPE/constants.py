@@ -1,6 +1,6 @@
 """ This module will contain all the constants used in pyCBPE package """
 
-ROOT_PATH = "/home/luigi/git/pyCBPE"
+ROOT_PATH = "/home/luigiluz/Documents/pessoal/pyCBPE"
 
 # Dataset paths
 PPG_SEG_PATH = "/files/dataset/ppg_seg.csv"
@@ -11,6 +11,11 @@ ABP_SEG_MATRIX = "/files/dataset/abp_matrix.csv"
 
 PPG_SEG_MATRIX_1 = "/files/dataset/ppg_matrix_split_1.csv"
 ABP_SEG_MATRIX_1 = "/files/dataset/abp_matrix_split_1.csv"
+
+FEATURES_AND_LABELS_DF_SPLIT_1_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_1.csv"
+FEATURES_AND_LABELS_DF_SPLIT_2_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_2.csv"
+FEATURES_AND_LABELS_DF_SPLIT_3_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_3.csv"
+FEATURES_AND_LABELS_DF_SPLIT_4_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_4.csv"
 
 OUTPUT_PATH = "/files/dataset/features_and_labels_df.csv"
 
