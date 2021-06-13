@@ -14,7 +14,7 @@ def load():
 
     dataframe = pd.concat([df_split_1, df_split_2, df_split_3, df_split_4])
 
-    return dataframe.reset_index()
+    return dataframe.reset_index(drop=True)
 
 
 def handle(dataframe):
@@ -29,7 +29,31 @@ def handle(dataframe):
     handled_df[consts.HEART_RATE] = handled_df[consts.HEART_RATE].astype(int)
     handled_df[consts.LABELS_COLUMNS] = handled_df[consts.LABELS_COLUMNS].astype(int)
 
-    return handled_df
+    return handled_df.reset_index(drop=True)
+
+
+def remove_outliers(dataframe):
+    """ Remove outliers based on labels values. """
+    temp_df = dataframe.copy()
+
+    labels_df = temp_df[consts.LABELS_COLUMNS]
+
+    summary_df = pd.DataFrame(labels_df.describe())
+
+    sbp_min = summary_df.loc["min", consts.SBP]
+    sbp_max = summary_df.loc["max", consts.SBP]
+    dbp_min = summary_df.loc["min", consts.DBP]
+    dbp_max = summary_df.loc["max", consts.DBP]
+    map_min = summary_df.loc["min", consts.MAP]
+    map_max = summary_df.loc["max", consts.MAP]
+
+    sbp_condition = (temp_df.loc[:, consts.SBP] > sbp_min) & (temp_df.loc[:, consts.SBP] < sbp_max)
+    dbp_condition = (temp_df.loc[:, consts.DBP] > dbp_min) & (temp_df.loc[:, consts.DBP] < dbp_max)
+    map_condition = (temp_df.loc[:, consts.MAP] > map_min) & (temp_df.loc[:, consts.MAP] < map_max)
+
+    outlier_free_df = temp_df.loc[sbp_condition & dbp_condition & map_condition, :]
+
+    return outlier_free_df.reset_index(drop=True)
 
 
 def get_features_as_array(dataframe):
