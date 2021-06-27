@@ -18,6 +18,9 @@ plot_key_points:
 generate_model:
 	$(PYTHON) scripts/generate_model.py
 
+lib:
+	$(PYTHON) -m build
+
 bootstrap: venv \
 			requirements \
 

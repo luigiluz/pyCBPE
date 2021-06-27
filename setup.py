@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pyCBPE-luigiluz",
-    version="0.0.1",
+    name="pyCBPE",
+    version="1.0.0",
     author="Luigi Luz",
     author_email="luigiluz98@gmail.com",
     description="pyCBPE Framework",
@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Operating System :: OS Independent",
+        "Operating System :: Ubuntu 20.04",
     ],
     python_requires='>=3.6',
 )
