@@ -26,8 +26,8 @@ def main():
 
     print("Loading datasets...")
     load_start_time = time.time()
-    ppg_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.PPG_SEG_MATRIX_1, header=None)
-    abp_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.ABP_SEG_MATRIX_1, header=None)
+    ppg_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.PPG_SEG_MATRIX, header=None)
+    abp_matrix_df = pd.read_csv(consts.ROOT_PATH + consts.ABP_SEG_MATRIX, header=None)
     load_stop_time = time.time()
     load_time_in_sec = load_stop_time - load_start_time
     load_time_in_min = load_time_in_sec / 60
