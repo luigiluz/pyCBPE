@@ -15,8 +15,17 @@ generate_dataset:
 plot_key_points:
 	$(PYTHON) scripts/plot_key_points.py
 
-generate_model:
-	$(PYTHON) scripts/generate_model.py
+generate_linear_regression_model:
+	$(PYTHON) scripts/generate_linear_regression_model.py
+
+generate_decision_tree_model:
+	$(PYTHON) scripts/generate_decision_tree_model.py
+
+generate_random_forest_model:
+	$(PYTHON) scripts/generate_random_forest_model.py
+
+generate_adaboost_model:
+	$(PYTHON) scripts/generate_adaboost_model.py
 
 lib:
 	$(PYTHON) -m build
