@@ -9,6 +9,7 @@ Photoplethysmogram signals.
 - [pip](https://pip.pypa.io/en/stable/installing/)
 - [venv](https://docs.python.org/3/library/venv.html)
 - [Make](https://www.gnu.org/software/make/)
+- [Octave](https://wiki.octave.org/Octave_for_GNU/Linux#Distribution_independent)
 
 # Setup
 
