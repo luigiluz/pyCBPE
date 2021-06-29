@@ -53,6 +53,12 @@ $ cd ../..
 
 Talvez seja necessário instalar o pacote unzip para extrair o arquivo da base de dados.
 
+#### Configurar o diretório raiz do projeto
+
+O diretório raiz do projeto é utilizado para gerar os arquivos de base de dados ao longo do projeto, dessa forma,
+deve-se atualizar a constante ROOT_PATH do arquivo constants.py com o diretório raiz no qual o diretório se encontra
+no seu computador.
+
 #### Preparação da base de dados
 
 Para preparar a base de dados, basta executar o comando abaixo:
