@@ -9,6 +9,9 @@ PIP := $(BIN)/pip
 REQUIREMENTS := -r requirements.txt
 PRE_COMMIT := $(BIN)/pre-commit
 
+prepare_dataset:
+	$(PYTHON) scripts/prepare_dataset.py
+
 generate_dataset:
 	$(PYTHON) scripts/generate_dataset.py
 

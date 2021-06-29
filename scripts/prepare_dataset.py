@@ -2,6 +2,8 @@ import mat73
 import numpy as np
 import pandas as pd
 
+import pyCBPE.constants as consts
+
 base_filename = "Part_"
 n_of_dataset_files = 4
 base_ppg_output_name = "ppg_seg_matrix_split_"
@@ -12,9 +14,10 @@ def main():
     segment_time = 5 # in seconds
 
     for p in range(n_of_dataset_files):
-        dataset_index = base_filename + str(p + 1)
+        dataset_index = consts.ORIGINAL_DATASET_PREFIX + str(p + 1)
+        dataset_path = consts.ROOT_PATH + consts.DATASET_PATH + dataset_index + consts.MAT_SUFIX
         print("Carregando dataset " + dataset_index)
-        data_dict = mat73.loadmat(dataset_index + ".mat")
+        data_dict = mat73.loadmat(dataset_path)
 
         n_of_recordings = len(data_dict[dataset_index])
         segment_samples = segment_time * sampling_freq
@@ -44,10 +47,10 @@ def main():
                 abp_seg_df = abp_seg_df.append(abp_seg_series, ignore_index=True)
 
         # Exportar os dataframes
-        ppg_seg_df_name = base_ppg_output_name + str(p + 1) + ".csv"
-        abp_seg_df_name = base_abp_output_name + str(p + 1) + ".csv"
-        ppg_seg_df.to_csv(ppg_seg_df_name, index=False)
-        abp_seg_df.to_csv(abp_seg_df_name, index=False)
+        ppg_seg_df_path = consts.ROOT_PATH + consts.DATASET_PATH + consts.PPG_DF_PREFIX + str(p + 1) + ".csv"
+        abp_seg_df_path = consts.ROOT_PATH + consts.DATASET_PATH + consts.ABP_DF_PREFIX + str(p + 1) + ".csv"
+        ppg_seg_df.to_csv(ppg_seg_df_path, index=False)
+        abp_seg_df.to_csv(abp_seg_df_path, index=False)
 
 
 if __name__ == "__main__":

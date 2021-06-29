@@ -2,14 +2,26 @@
 
 ROOT_PATH = "/home/luigiluz/Documents/pessoal/pyCBPE"
 
+N_OF_DATASET_FILES = 4
+
 # Dataset paths
-PPG_SEG_MATRIX = "/files/dataset/ppg_matrix_split_1.csv"
+DATASET_PATH = "/files/dataset/"
+
+PPG_SEG_MATRIX_SPLIT_1_PATH = DATASET_PATH + "ppg_matrix_split_1.csv"
 ABP_SEG_MATRIX = "/files/dataset/abp_matrix_split_1.csv"
 
-FEATURES_AND_LABELS_DF_SPLIT_1_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_1.csv"
-FEATURES_AND_LABELS_DF_SPLIT_2_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_2.csv"
-FEATURES_AND_LABELS_DF_SPLIT_3_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_3.csv"
-FEATURES_AND_LABELS_DF_SPLIT_4_PATH = ROOT_PATH + "/files/dataset/features_and_labels_df_split_4.csv"
+FEATURES_AND_LABELS_DF_PREFIX = "features_and_labels_df_split_"
+ORIGINAL_DATASET_PREFIX = "Part_"
+CSV_SUFIX = ".csv"
+MAT_SUFIX = ".mat"
+
+PPG_DF_PREFIX = "ppg_seg_df_split_"
+ABP_DF_PREFIX = "abp_seg_df_split_"
+
+FEATURES_AND_LABELS_DF_SPLIT_1_PATH = ROOT_PATH + DATASET_PATH + "features_and_labels_df_split_1.csv"
+FEATURES_AND_LABELS_DF_SPLIT_2_PATH = ROOT_PATH + DATASET_PATH + "features_and_labels_df_split_2.csv"
+FEATURES_AND_LABELS_DF_SPLIT_3_PATH = ROOT_PATH + DATASET_PATH + "features_and_labels_df_split_3.csv"
+FEATURES_AND_LABELS_DF_SPLIT_4_PATH = ROOT_PATH + DATASET_PATH + "features_and_labels_df_split_4.csv"
 
 OUTPUT_PATH = "/files/dataset/features_and_labels_df.csv"
 
