@@ -16,3 +16,4 @@ build==0.5.1
 pep517==0.10.0
 setuptools==57.0.0
 wheel==0.36.2
+mat73==0.50
