@@ -38,8 +38,6 @@ $ make bootstrap
 
 ### Guia de uso
 
-Caso não deseje executar os primeiros dois passos que correspondem a geração da base de dados de features e labels, os arquivos podem ser baixados neste link:
-
 #### Obtenção da base de dados
 
 Para fazer o download da base de dados, basta executar o seguinte comando:
